@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+//enum APIKeys {
+//	static let auth = "Your API Keys"
+//}
