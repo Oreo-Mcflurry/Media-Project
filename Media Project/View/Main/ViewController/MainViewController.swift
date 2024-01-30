@@ -21,20 +21,28 @@ class MainViewController: UIViewController {
 		configureHierarchy()
 		configureView()
 		configureLayout()
-		TMDBManager.getTVTrend(selectTime) { result in
-			self.tvInfo[0].append(contentsOf: result)
-			self.tableView.reloadData()
-		}
+		let allCase = TMDBManager.TVKind.allCases
 
-		TMDBManager.getTVTopRate { result in
-			self.tvInfo[1].append(contentsOf: result)
-			self.tableView.reloadData()
+		for (index, item) in allCase.enumerated() {
+			TMDBManager.getTVInfo(withKind: item, selectTime) { result in
+				self.tvInfo[index].append(contentsOf: result)
+				self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+			}
 		}
-
-		TMDBManager.getTVPopular { result in
-			self.tvInfo[2].append(contentsOf: result)
-			self.tableView.reloadData()
-		}
+//		TMDBManager.getTVTrend(selectTime) { result in
+//			self.tvInfo[0].append(contentsOf: result)
+//			self.tableView.reloadData()
+//		}
+//
+//		TMDBManager.getTVTopRate { result in
+//			self.tvInfo[1].append(contentsOf: result)
+//			self.tableView.reloadData()
+//		}
+//
+//		TMDBManager.getTVPopular { result in
+//			self.tvInfo[2].append(contentsOf: result)
+//			self.tableView.reloadData()
+//		}
 	}
 }
 
@@ -51,6 +59,28 @@ extension MainViewController: ConfigureView {
 	
 	func configureView() {
 		navigationItem.title = "TV쇼"
+		let rightButton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(setTime))
+		navigationItem.rightBarButtonItem = rightButton
+	}
+
+	@objc func setTime() {
+		let alert =	UIAlertController(title: "TV쇼 뭘로 할지", message: "정해용", preferredStyle: .actionSheet)
+		let cancelButton = UIAlertAction(title: "취소", style: .cancel)
+		alert.addAction(cancelButton)
+
+		for item in Time.allCases {
+			let button = UIAlertAction(title: item.rawValue, style: .default) { _ in
+				self.selectTime = item
+				// TODO: 여기서 문제가 생기는데 이유가 뭔지 모르겠음.
+				TMDBManager.getTVInfo(withKind: .trend, item) { result in
+					self.tvInfo[0] = result
+					self.tableView.reloadData()
+				}
+			}
+			alert.addAction(button)
+		}
+
+		present(alert, animated: true)
 	}
 }
 
@@ -65,7 +95,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 		cell.collectionView.delegate = self
 		cell.collectionView.tag = indexPath.row
 		cell.collectionView.register(TVCollectionViewCell.self, forCellWithReuseIdentifier: TVCollectionViewCell.identifier)
-		cell.collectionView.reloadData()
+		cell.collectionView.reloadItems(at: [indexPath])
 		return cell
 	}
 	
@@ -87,7 +117,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 		if let url = tvInfo[collectionView.tag][indexPath.item].posterPath {
 			cell.imageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(url)")!)
 		} else {
-			cell.imageView.kf.setImage(with: URL(string: "https://search.pstatic.net/common/?src=http%3A%2F%2Fpost.phinf.naver.net%2FMjAxOTA2MjVfNCAg%2FMDAxNTYxNDUyNjU1NDIy.5vpE1pW3ouD-TCcIwlArOElz-m8FhsPZX71hJEtM794g.MI95E9iXt_QmwgXFHrxEa1nCm98SU1Y0VC9pbFYd5yog.JPEG%2FIugzStc1p_N0_ijIuWK08xf-gjJg.jpg&type=sc960_832")!)
+			cell.imageView.kf.setImage(with: URL(string: TMDBManager.failImage)!)
 		}
 		cell.label.text = tvInfo[collectionView.tag][indexPath.item].name
 		return cell
