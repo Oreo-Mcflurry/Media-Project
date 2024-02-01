@@ -34,6 +34,7 @@ struct ResponseResult: Decodable {
 	let firstAirDate, name: String
 	let voteAverage: Double
 	let voteCount: Int
+	let isBest: Bool
 
 	enum CodingKeys: String, CodingKey {
 		case adult
@@ -53,19 +54,20 @@ struct ResponseResult: Decodable {
 
 	init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		self.adult = try container.decode(Bool.self, forKey: .adult)
+		self.adult = try container.decodeIfPresent(Bool.self, forKey: .adult) ?? false
 		self.backdropPath = try container.decodeIfPresent(String.self, forKey: .backdropPath) ?? ""
-		self.genreIDS = try container.decode([Int].self, forKey: .genreIDS)
-		self.id = try container.decode(Int.self, forKey: .id)
-		self.originCountry = try container.decode([String].self, forKey: .originCountry)
-		self.originalLanguage = try container.decode(String.self, forKey: .originalLanguage)
-		self.originalName = try container.decode(String.self, forKey: .originalName)
-		self.overview = try container.decode(String.self, forKey: .overview)
-		self.popularity = try container.decode(Double.self, forKey: .popularity)
+		self.genreIDS = try container.decodeIfPresent([Int].self, forKey: .genreIDS) ?? []
+		self.id = try container.decodeIfPresent(Int.self, forKey: .id) ?? 0
+		self.originCountry = try container.decodeIfPresent([String].self, forKey: .originCountry) ?? []
+		self.originalLanguage = try container.decodeIfPresent(String.self, forKey: .originalLanguage) ?? "정보가 없습니다."
+		self.originalName = try container.decodeIfPresent(String.self, forKey: .originalName) ?? "이름이 없습니다."
+		self.overview = try container.decodeIfPresent(String.self, forKey: .overview) ?? "설명이 없습니다."
+		self.popularity = try container.decodeIfPresent(Double.self, forKey: .popularity) ?? 0
 		self.posterPath = try container.decodeIfPresent(String.self, forKey: .posterPath) ?? ""
-		self.firstAirDate = try container.decode(String.self, forKey: .firstAirDate)
-		self.name = try container.decode(String.self, forKey: .name)
-		self.voteAverage = try container.decode(Double.self, forKey: .voteAverage)
-		self.voteCount = try container.decode(Int.self, forKey: .voteCount)
+		self.firstAirDate = try container.decodeIfPresent(String.self, forKey: .firstAirDate) ?? ""
+		self.name = try container.decodeIfPresent(String.self, forKey: .name) ?? "이름이 없습니다."
+		self.voteAverage = try container.decodeIfPresent(Double.self, forKey: .voteAverage) ?? 0
+		self.voteCount = try container.decodeIfPresent(Int.self, forKey: .voteCount) ?? 0
+		self.isBest = (try container.decode(Double.self, forKey: .voteAverage)) >= 8.0 ? true : false
 	}
 }

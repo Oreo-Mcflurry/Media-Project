@@ -9,7 +9,12 @@ import Foundation
 import Alamofire
 
 enum TMDBAPI {
-	case trending
+	enum Time: String {
+		case week
+		case day
+	}
+
+	case trending(time: Time)
 	case search(query: String) // 열거형의 연관값
 	case photo(id: String)
 
@@ -19,8 +24,8 @@ enum TMDBAPI {
 
 	var getURL: URL {
 		switch self {
-		case .trending:
-			return URL(string: baseURL + "trending/movie/week?language=ko-KR")!
+		case .trending(let time):
+			return URL(string: baseURL + "trending/movie/\(time.rawValue)?language=ko-KR")!
 		case .search:
 			return URL(string: baseURL + "search/movie")!
 		case .photo(let id):
@@ -32,7 +37,7 @@ enum TMDBAPI {
 		return ["Authorization": APIKeys.auth]
 	}
 
-	var get: HTTPMethod {
+	var method: HTTPMethod {
 		return .get
 	}
 
@@ -44,6 +49,15 @@ enum TMDBAPI {
 			return ["language":"ko-KR", "query": query]
 		case .photo:
 			return ["":""]
+		}
+	}
+
+	var encoding: URLEncoding {
+		switch self {
+		case .trending: return .default
+
+		case .search: return .queryString
+		case .photo: return .default
 		}
 	}
 }

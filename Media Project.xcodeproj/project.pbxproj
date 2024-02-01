@@ -34,6 +34,10 @@
 		0BB6BF6E2B6BB1FB00D93950 /* TMDBAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF6D2B6BB1FB00D93950 /* TMDBAPI.swift */; };
 		0BB6BF712B6BB2EA00D93950 /* BaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF702B6BB2EA00D93950 /* BaseUIView.swift */; };
 		0BB6BF752B6BB3D200D93950 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF742B6BB3D200D93950 /* HomeViewController.swift */; };
+		0BB6BF792B6BB59B00D93950 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF782B6BB59B00D93950 /* HomeView.swift */; };
+		0BB6BF812B6BC41700D93950 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF802B6BC41600D93950 /* BaseCollectionViewCell.swift */; };
+		0BB6BF842B6BC45000D93950 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF832B6BC45000D93950 /* CollectionViewCell.swift */; };
+		0BB6BF8B2B6BD79000D93950 /* RecommandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF8A2B6BD79000D93950 /* RecommandingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +65,10 @@
 		0BB6BF6D2B6BB1FB00D93950 /* TMDBAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBAPI.swift; sourceTree = "<group>"; };
 		0BB6BF702B6BB2EA00D93950 /* BaseUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIView.swift; sourceTree = "<group>"; };
 		0BB6BF742B6BB3D200D93950 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		0BB6BF782B6BB59B00D93950 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0BB6BF802B6BC41600D93950 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		0BB6BF832B6BC45000D93950 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		0BB6BF8A2B6BD79000D93950 /* RecommandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				0BB6BF6F2B6BB2C900D93950 /* Legacy */,
+				0BB6BF862B6BC6CC00D93950 /* Extension */,
 				0BB6BF2E2B692A7000D93950 /* Model */,
 				0BB6BF1F2B68DFC900D93950 /* Protocol */,
 				0BB6BF042B68DC5B00D93950 /* APIKey */,
@@ -135,6 +144,7 @@
 		0BB6BF1A2B68DF0300D93950 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0BB6BF7E2B6BC3E400D93950 /* Cell */,
 				0BB6BF722B6BB33300D93950 /* HomeView */,
 				0BB6BF3E2B6A1DC300D93950 /* Base */,
 			);
@@ -199,6 +209,7 @@
 				0BB6BF3C2B6A1DBE00D93950 /* BaseViewController.swift */,
 				0BB6BF432B6A20F800D93950 /* BaseTableViewCell.swift */,
 				0BB6BF702B6BB2EA00D93950 /* BaseUIView.swift */,
+				0BB6BF802B6BC41600D93950 /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -256,6 +267,7 @@
 		0BB6BF722B6BB33300D93950 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				0BB6BF762B6BB56900D93950 /* View */,
 				0BB6BF732B6BB3C100D93950 /* ViewController */,
 			);
 			path = HomeView;
@@ -267,6 +279,62 @@
 				0BB6BF742B6BB3D200D93950 /* HomeViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		0BB6BF762B6BB56900D93950 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0BB6BF892B6BD77D00D93950 /* RecommandingView */,
+				0BB6BF7D2B6BC17A00D93950 /* SearchIngView */,
+				0BB6BF772B6BB58500D93950 /* HomeView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0BB6BF772B6BB58500D93950 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				0BB6BF782B6BB59B00D93950 /* HomeView.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		0BB6BF7D2B6BC17A00D93950 /* SearchIngView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SearchIngView;
+			sourceTree = "<group>";
+		};
+		0BB6BF7E2B6BC3E400D93950 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0BB6BF822B6BC44000D93950 /* Poster */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		0BB6BF822B6BC44000D93950 /* Poster */ = {
+			isa = PBXGroup;
+			children = (
+				0BB6BF832B6BC45000D93950 /* CollectionViewCell.swift */,
+			);
+			path = Poster;
+			sourceTree = "<group>";
+		};
+		0BB6BF862B6BC6CC00D93950 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		0BB6BF892B6BD77D00D93950 /* RecommandingView */ = {
+			isa = PBXGroup;
+			children = (
+				0BB6BF8A2B6BD79000D93950 /* RecommandingView.swift */,
+			);
+			path = RecommandingView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,14 +426,18 @@
 				0BB6BF752B6BB3D200D93950 /* HomeViewController.swift in Sources */,
 				0BB6BF6E2B6BB1FB00D93950 /* TMDBAPI.swift in Sources */,
 				0BB6BF262B68E14600D93950 /* TVTableViewCell.swift in Sources */,
+				0BB6BF8B2B6BD79000D93950 /* RecommandingView.swift in Sources */,
 				0BB6BF302B692AC400D93950 /* TVAPI.swift in Sources */,
 				0BB6BF062B68DC6600D93950 /* APIKeys.swift in Sources */,
 				0BB6BEF12B68DC4100D93950 /* SceneDelegate.swift in Sources */,
+				0BB6BF812B6BC41700D93950 /* BaseCollectionViewCell.swift in Sources */,
 				0BB6BF2D2B6919D700D93950 /* TVCollectionViewCell.swift in Sources */,
+				0BB6BF842B6BC45000D93950 /* CollectionViewCell.swift in Sources */,
 				0BB6BF482B6A2DF000D93950 /* DetailViewController.swift in Sources */,
 				0BB6BF3B2B6A1D9600D93950 /* SearchViewController.swift in Sources */,
 				0BB6BF1E2B68DF5B00D93950 /* MainViewController.swift in Sources */,
 				0BB6BF442B6A20F800D93950 /* BaseTableViewCell.swift in Sources */,
+				0BB6BF792B6BB59B00D93950 /* HomeView.swift in Sources */,
 				0BB6BF232B68DFEF00D93950 /* IdentifierProtocolk.swift in Sources */,
 				0BB6BF0B2B68DD4400D93950 /* TMDBManager.swift in Sources */,
 				0BB6BF082B68DC7400D93950 /* PublicAPIKeys.swift in Sources */,
