@@ -59,7 +59,7 @@ class TMDBManager {
 	}
 
 	static func request(_ url: String, _ completionHandler: @escaping ([ResponseResult])->Void) {
-		AF.request(url, headers: TMDBManager.header).responseDecodable(of: TVAPI.self) { result in
+		AF.request(url, headers: TMDBManager.header).responseDecodable(of: TMDB.self) { result in
 			switch result.result {
 			case .success(let success):
 				completionHandler(success.results)
