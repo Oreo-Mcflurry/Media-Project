@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseUIView: UIView {
+class BaseUIView: UIView, ConfigureView {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		configureHierarchy()

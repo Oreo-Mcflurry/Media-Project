@@ -11,11 +11,11 @@ import SnapKit
 class HomeView: BaseUIView {
 
 	let searchBar = UISearchBar()
-	let label = UILabel()
 	let recommandCollectionView = RecommandingView()
+	let searchView = SearchView()
 
 	override func configureHierarchy() {
-		[searchBar, label, recommandCollectionView].forEach { addSubview($0) }
+		[searchBar, recommandCollectionView].forEach { addSubview($0) }
 	}
 
 	override func configureLayout() {
@@ -24,25 +24,28 @@ class HomeView: BaseUIView {
 			$0.horizontalEdges.equalTo(self).inset(5)
 			$0.height.equalTo(45)
 		}
+		setRecommandCollectionViewLayout()
+	}
 
-		label.snp.makeConstraints {
-			$0.top.equalTo(searchBar.snp.bottom).offset(10)
-			$0.horizontalEdges.equalTo(self).inset(15)
-		}
-
+	func setRecommandCollectionViewLayout() {
 		recommandCollectionView.snp.makeConstraints {
-			$0.top.equalTo(label.snp.bottom).offset(10)
+			$0.top.equalTo(searchBar.snp.bottom).offset(10)
 			$0.horizontalEdges.bottom.equalTo(self)
 		}
+	}
 
+	func setSearchTableViewLayout() {
+		searchView.snp.makeConstraints {
+			$0.top.equalTo(searchBar.snp.bottom).offset(10)
+			$0.horizontalEdges.bottom.equalTo(self)
+		}
 	}
 
 	override func configureView() {
 		searchBar.placeholder = "검색해보세요"
 		searchBar.searchBarStyle = .minimal
 		searchBar.showsCancelButton = true
-		label.font = .boldSystemFont(ofSize: 17)
-		label.text = ""
+		
 	}
 }
 

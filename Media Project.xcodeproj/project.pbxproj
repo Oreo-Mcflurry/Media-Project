@@ -38,6 +38,8 @@
 		0BB6BF812B6BC41700D93950 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF802B6BC41600D93950 /* BaseCollectionViewCell.swift */; };
 		0BB6BF842B6BC45000D93950 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF832B6BC45000D93950 /* CollectionViewCell.swift */; };
 		0BB6BF8B2B6BD79000D93950 /* RecommandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF8A2B6BD79000D93950 /* RecommandingView.swift */; };
+		0BB6BF8D2B6BDD0400D93950 /* SearchTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF8C2B6BDD0400D93950 /* SearchTableView.swift */; };
+		0BB6BF902B6BDEE600D93950 /* SearchingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BF8F2B6BDEE600D93950 /* SearchingCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,8 @@
 		0BB6BF802B6BC41600D93950 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		0BB6BF832B6BC45000D93950 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		0BB6BF8A2B6BD79000D93950 /* RecommandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandingView.swift; sourceTree = "<group>"; };
+		0BB6BF8C2B6BDD0400D93950 /* SearchTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableView.swift; sourceTree = "<group>"; };
+		0BB6BF8F2B6BDEE600D93950 /* SearchingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +306,7 @@
 		0BB6BF7D2B6BC17A00D93950 /* SearchIngView */ = {
 			isa = PBXGroup;
 			children = (
+				0BB6BF8C2B6BDD0400D93950 /* SearchTableView.swift */,
 			);
 			path = SearchIngView;
 			sourceTree = "<group>";
@@ -309,6 +314,7 @@
 		0BB6BF7E2B6BC3E400D93950 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				0BB6BF8E2B6BDED600D93950 /* Search */,
 				0BB6BF822B6BC44000D93950 /* Poster */,
 			);
 			path = Cell;
@@ -335,6 +341,14 @@
 				0BB6BF8A2B6BD79000D93950 /* RecommandingView.swift */,
 			);
 			path = RecommandingView;
+			sourceTree = "<group>";
+		};
+		0BB6BF8E2B6BDED600D93950 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				0BB6BF8F2B6BDEE600D93950 /* SearchingCell.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -434,9 +448,11 @@
 				0BB6BF2D2B6919D700D93950 /* TVCollectionViewCell.swift in Sources */,
 				0BB6BF842B6BC45000D93950 /* CollectionViewCell.swift in Sources */,
 				0BB6BF482B6A2DF000D93950 /* DetailViewController.swift in Sources */,
+				0BB6BF8D2B6BDD0400D93950 /* SearchTableView.swift in Sources */,
 				0BB6BF3B2B6A1D9600D93950 /* SearchViewController.swift in Sources */,
 				0BB6BF1E2B68DF5B00D93950 /* MainViewController.swift in Sources */,
 				0BB6BF442B6A20F800D93950 /* BaseTableViewCell.swift in Sources */,
+				0BB6BF902B6BDEE600D93950 /* SearchingCell.swift in Sources */,
 				0BB6BF792B6BB59B00D93950 /* HomeView.swift in Sources */,
 				0BB6BF232B68DFEF00D93950 /* IdentifierProtocolk.swift in Sources */,
 				0BB6BF0B2B68DD4400D93950 /* TMDBManager.swift in Sources */,

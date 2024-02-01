@@ -9,21 +9,29 @@ import UIKit
 import SnapKit
 
 class RecommandingView: BaseUIView {
+	let label = UILabel()
 	let collectionView = UICollectionView(frame: .zero, collectionViewLayout: getCollectionViewLayout())
 
 	override func configureHierarchy() {
-		[collectionView].forEach { addSubview($0) }
+		[label, collectionView].forEach { addSubview($0) }
 	}
 
 	override func configureLayout() {
+		label.snp.makeConstraints {
+			$0.top.equalTo(self).offset(10)
+			$0.horizontalEdges.equalTo(self).inset(15)
+		}
 
 		collectionView.snp.makeConstraints {
-			$0.edges.equalTo(self)
+			$0.top.equalTo(label.snp.bottom).offset(10)
+			$0.horizontalEdges.bottom.equalTo(self)
 		}
 	}
 
 	override func configureView() {
 		collectionView.backgroundColor = .clear
+		label.font = .boldSystemFont(ofSize: 17)
+		label.text = ""
 	}
 
 	private static func getCollectionViewLayout() -> UICollectionViewLayout {

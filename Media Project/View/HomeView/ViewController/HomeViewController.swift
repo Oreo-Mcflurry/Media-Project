@@ -12,6 +12,7 @@ import Toast
 class HomeViewController: BaseViewController {
 
 	var trendResult: TMDB = .init(page: 0, results: [], totalPages: 0, totalResults: 0)
+	var searchResult: TMDB = .init(page: 0, results: [], totalPages: 0, totalResults: 0)
 	let homeView = HomeView()
 	var selectedTime: TMDBAPI.Time = .day
 
@@ -23,17 +24,19 @@ class HomeViewController: BaseViewController {
 		super.viewDidLoad()
 		setCollectionView()
 		setSearchbar()
+		setTableView()
 		requestTMDB()
 	}
 
 	override func configureView() {
 		let rightButton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(changeTime))
+		rightButton.tintColor = .black
 		navigationItem.rightBarButtonItem = rightButton
 
 		navigationItem.title = "SeSAC 영화관"
 
-		let endEditGesture = UITapGestureRecognizer(target: self, action: #selector(endEdit))
-		view.addGestureRecognizer(endEditGesture)
+//		let endEditGesture = UITapGestureRecognizer(target: self, action: #selector(endEdit))
+//		view.addGestureRecognizer(endEditGesture)
 	}
 
 	@objc func changeTime() {
@@ -52,7 +55,25 @@ class HomeViewController: BaseViewController {
 			self.trendResult = result
 			self.homeView.recommandCollectionView.collectionView.reloadData()
 		}
-		homeView.label.text = selectedTime == .day ? "오늘의 핫한 영화" : "이번주의 핫한 영화"
+		homeView.recommandCollectionView.label.text = selectedTime == .day ? "오늘의 핫한 영화" : "이번주의 핫한 영화"
+	}
+}
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return searchResult.results.count
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: SearchingCell.identifier, for: indexPath) as! SearchingCell
+		cell.searchLabel.text = searchResult.results[indexPath.row].name
+		return cell
+	}
+
+	func setTableView() {
+		homeView.searchView.tableView.dataSource = self
+		homeView.searchView.tableView.delegate = self
+		homeView.searchView.tableView.register(SearchingCell.self, forCellReuseIdentifier: SearchingCell.identifier)
 	}
 }
 
@@ -77,16 +98,24 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension HomeViewController: UISearchBarDelegate {
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+		searchResult.results.removeAll()
+		homeView.searchView.tableView.reloadData()
 		homeView.recommandCollectionView.removeFromSuperview()
+		homeView.addSubview(homeView.searchView)
+		homeView.setSearchTableViewLayout()
 	}
 
 	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+		homeView.searchView.removeFromSuperview()
 		homeView.addSubview(homeView.recommandCollectionView)
-		homeView.configureLayout()
+		homeView.setRecommandCollectionViewLayout()
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
+		TMDBManager.requestTMDB(withAPI: .search(query: searchBar.text!)) { result in
+			self.searchResult = result
+			self.homeView.searchView.tableView.reloadData()
+		}
 	}
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
