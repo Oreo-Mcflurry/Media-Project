@@ -11,6 +11,7 @@ import Toast
 
 class HomeViewController: BaseViewController {
 
+	var searchPage = 1
 	var trendResult: TMDB = .init(page: 0, results: [], totalPages: 0, totalResults: 0)
 	var searchResult: TMDB = .init(page: 0, results: [], totalPages: 0, totalResults: 0)
 	let homeView = HomeView()
@@ -56,7 +57,20 @@ class HomeViewController: BaseViewController {
 	}
 }
 
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
+	func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+		if searchPage < searchResult.totalPages {
+			for item in indexPaths where item.row >= searchResult.results.count - 3 {
+				searchPage += 1
+				TMDBManager.requestTMDB(withAPI: .search(query: homeView.searchBar.text!, page: searchPage)) { result in
+					self.searchResult.results.append(contentsOf: result.results)
+					self.homeView.searchView.tableView.reloadData()
+				}
+				break
+			}
+		}
+	}
+
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return searchResult.results.count
 	}
@@ -76,6 +90,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 	func setTableView() {
 		homeView.searchView.tableView.dataSource = self
 		homeView.searchView.tableView.delegate = self
+		homeView.searchView.tableView.prefetchDataSource = self
 		homeView.searchView.tableView.register(SearchingCell.self, forCellReuseIdentifier: SearchingCell.identifier)
 	}
 }
@@ -130,7 +145,8 @@ extension HomeViewController: UISearchBarDelegate {
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		TMDBManager.requestTMDB(withAPI: .search(query: searchBar.text!)) { result in
+		searchPage = 1
+		TMDBManager.requestTMDB(withAPI: .search(query: searchBar.text!, page: searchPage)) { result in
 			self.searchResult = result
 			self.homeView.searchView.tableView.reloadData()
 		}
