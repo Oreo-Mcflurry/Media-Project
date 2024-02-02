@@ -34,9 +34,6 @@ class HomeViewController: BaseViewController {
 		navigationItem.rightBarButtonItem = rightButton
 
 		navigationItem.title = "SeSAC 영화관"
-
-//		let endEditGesture = UITapGestureRecognizer(target: self, action: #selector(endEdit))
-//		view.addGestureRecognizer(endEditGesture)
 	}
 
 	@objc func changeTime() {
@@ -70,6 +67,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 		return cell
 	}
 
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let vc = DetailViewController()
+		vc.data = searchResult.results[indexPath.row]
+		transition(vc, withStyle: .push)
+	}
+
 	func setTableView() {
 		homeView.searchView.tableView.dataSource = self
 		homeView.searchView.tableView.delegate = self
@@ -86,6 +89,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.identifier, for: indexPath) as! PosterCollectionViewCell
 		cell.posterImage.kf.setImage(with: TMDBManager.getImageURL(trendResult.results[indexPath.item].posterPath))
 		cell.isBest = trendResult.results[indexPath.item].isBest
+
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pushDetailView(sender:)))
+		cell.posterImage.tag = indexPath.item
+		cell.posterImage.addGestureRecognizer(tapGesture)
 		return cell
 	}
 
@@ -94,21 +101,32 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 		homeView.recommandCollectionView.collectionView.dataSource = self
 		homeView.recommandCollectionView.collectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
 	}
+
+	@objc func pushDetailView(sender: UIGestureRecognizer) {
+		let vc = DetailViewController()
+		vc.data = trendResult.results[sender.view!.tag]
+		transition(vc, withStyle: .push)
+	}
 }
 
 extension HomeViewController: UISearchBarDelegate {
 	func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-		searchResult.results.removeAll()
-		homeView.searchView.tableView.reloadData()
 		homeView.recommandCollectionView.removeFromSuperview()
 		homeView.addSubview(homeView.searchView)
 		homeView.setSearchTableViewLayout()
+		homeView.searchBar.setShowsCancelButton(true, animated: true)
 	}
 
 	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
 		homeView.searchView.removeFromSuperview()
 		homeView.addSubview(homeView.recommandCollectionView)
 		homeView.setRecommandCollectionViewLayout()
+		homeView.searchBar.setShowsCancelButton(false, animated: true)
+	}
+
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+		searchResult.results.removeAll()
+		homeView.searchView.tableView.reloadData()
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

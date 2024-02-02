@@ -44,7 +44,7 @@ class HomeView: BaseUIView {
 	override func configureView() {
 		searchBar.placeholder = "검색해보세요"
 		searchBar.searchBarStyle = .minimal
-		searchBar.showsCancelButton = true
+//		searchBar.showsCancelButton = true
 		
 	}
 }

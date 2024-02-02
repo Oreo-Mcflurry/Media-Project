@@ -70,4 +70,22 @@ struct ResponseResult: Decodable {
 		self.voteCount = try container.decode(Int.self, forKey: .voteCount)
 		self.isBest = (try container.decode(Double.self, forKey: .voteAverage)) >= 8.0 ? true : false
 	}
+
+	init() {
+		self.adult = false
+		self.backdropPath = ""
+		self.genreIDS = []
+		self.id = 0
+		self.originCountry = []
+		self.originalLanguage = ""
+		self.originalName =  ""
+		self.overview = ""
+		self.popularity = 0
+		self.posterPath = ""
+		self.firstAirDate = ""
+		self.name = ""
+		self.voteAverage = 0
+		self.voteCount = 0
+		self.isBest = false
+	}
 }

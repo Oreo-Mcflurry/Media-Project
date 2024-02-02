@@ -15,11 +15,11 @@ class PosterCollectionViewCell: BaseCollectionViewCell {
 		didSet {
 			if self.isBest {
 				addSubview(bestImage)
-
 				bestImage.snp.makeConstraints {
 					$0.top.trailing.equalTo(self)
 					$0.leading.greaterThanOrEqualTo(self)
 					$0.height.equalTo(self.frame.height/4)
+					$0.width.equalTo(self.frame.width/2)
 				}
 			}
 		}
@@ -38,6 +38,9 @@ class PosterCollectionViewCell: BaseCollectionViewCell {
 	override func configureView() {
 		bestImage.image = .best
 		posterImage.contentMode = .scaleAspectFit
+		posterImage.clipsToBounds = true
+		posterImage.layer.cornerRadius = 10
+		posterImage.isUserInteractionEnabled = true
 		self.backgroundColor = .clear
 	}
 }
