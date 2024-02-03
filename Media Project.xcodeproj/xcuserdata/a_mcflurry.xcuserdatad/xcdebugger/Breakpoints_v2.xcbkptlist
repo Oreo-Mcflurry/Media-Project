@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "22"
             endingLineNumber = "22"
-            landmarkName = "requestTMDB(withAPI:_:)"
+            landmarkName = "requestTMDB(withAPI:model:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

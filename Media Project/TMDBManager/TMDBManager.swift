@@ -9,12 +9,12 @@ import Foundation
 import Alamofire
 
 class TMDBManager {
-	static func requestTMDB(withAPI api: TMDBAPI, _ completionHandler: @escaping (TMDB)->Void) {
+	static func requestTMDB<T: Decodable>(withAPI api: TMDBAPI, model: T.Type , _ completionHandler: @escaping (T)->Void) {
 		AF.request(api.getURL,
 					  method: api.method,
 					  parameters: api.parameter,
 					  encoding: api.encoding,
-					  headers: api.header).responseDecodable(of: TMDB.self) { response in
+					  headers: api.header).responseDecodable(of: T.self) { response in
 			switch response.result {
 			case .success(let success):
 				completionHandler(success)

@@ -10,7 +10,7 @@ import UIKit
 class WebViewController: BaseViewController {
 
 	let webView = WebView()
-	var url = ""
+	var url: URL? = URL(string: "")
 
 	override func loadView() {
 		self.view = webView
@@ -21,13 +21,13 @@ class WebViewController: BaseViewController {
 	}
 
 	override func configureView() {
-		if let url = URL(string: url) {
+		if let url {
 			let request = URLRequest(url: url)
 			webView.webView.load(request)
 		}
 	}
 
-	static func getURL(withQuery text: String) -> String {
-		return "https://www.google.com/search?q=\(text)"
+	static func getURL(withQuery text: String) -> URL {
+		return URL(string: "https://www.google.com/search?q=\(text)")!
 	}
 }

@@ -12,8 +12,8 @@ import Toast
 class HomeViewController: BaseViewController {
 
 	var searchPage = 1
-	var trendResult: TMDB = .init(page: 0, results: [], totalPages: 0, totalResults: 0)
-	var searchResult: TMDB = .init(page: 0, results: [], totalPages: 0, totalResults: 0)
+	var trendResult: TMDB = .init()
+	var searchResult: TMDB = .init()
 	let homeView = HomeView()
 	var selectedTime: TMDBAPI.Time = .day
 
@@ -49,7 +49,7 @@ class HomeViewController: BaseViewController {
 	}
 
 	private func requestTMDB() {
-		TMDBManager.requestTMDB(withAPI: .trending(time: selectedTime)) { result in
+		TMDBManager.requestTMDB(withAPI: .trending(time: selectedTime), model: TMDB.self) { result in
 			self.trendResult = result
 			self.homeView.recommandCollectionView.collectionView.reloadData()
 		}
@@ -62,7 +62,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UITabl
 		if searchPage < searchResult.totalPages {
 			for item in indexPaths where item.row >= searchResult.results.count - 3 {
 				searchPage += 1
-				TMDBManager.requestTMDB(withAPI: .search(query: homeView.searchBar.text!, page: searchPage)) { result in
+				TMDBManager.requestTMDB(withAPI: .search(query: homeView.searchBar.text!, page: searchPage), model: TMDB.self) { result in
 					self.searchResult.results.append(contentsOf: result.results)
 					self.homeView.searchView.tableView.reloadData()
 				}
@@ -146,7 +146,7 @@ extension HomeViewController: UISearchBarDelegate {
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		searchPage = 1
-		TMDBManager.requestTMDB(withAPI: .search(query: searchBar.text!, page: searchPage)) { result in
+		TMDBManager.requestTMDB(withAPI: .search(query: searchBar.text!, page: searchPage), model: TMDB.self) { result in
 			self.searchResult = result
 			self.homeView.searchView.tableView.reloadData()
 		}

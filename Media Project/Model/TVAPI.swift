@@ -14,10 +14,25 @@ struct TMDB: Decodable {
 	let totalResults: Int
 
 	enum CodingKeys: String, CodingKey {
-		case page = "page"
-		case results = "results"
+		case page
+		case results
 		case totalPages = "total_pages"
 		case totalResults = "total_results"
+	}
+
+	init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		self.page = try container.decode(Int.self, forKey: .page)
+		self.results = try container.decode([ResponseResult].self, forKey: .results)
+		self.totalPages = try container.decode(Int.self, forKey: .totalPages)
+		self.totalResults = try container.decode(Int.self, forKey: .totalResults)
+	}
+
+	init() {
+		self.page = 0
+		self.results = []
+		self.totalPages = 0
+		self.totalResults = 0
 	}
 }
 

@@ -12,16 +12,21 @@ import Kingfisher
 class DetailView: BaseUIView {
 	let maskBackImageView = MaskedImageView(frame: .zero)
 	let posterImageView = UIImageView()
+
+	let scrollView = UIScrollView()
+
 	let titleLabel = UILabel()
 	let subtitleLabel = UILabel()
 	let ratingLabel = UILabel()
 	private let overviewLabel = UILabel()
 	let descriptionLabel = UILabel()
-	let scrollView = UIScrollView()
+	private let anotherPosterLabel = UILabel()
+
+	let anotherPosterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: getCollectionViewLayout())
 
 	override func configureHierarchy() {
 		addSubview(scrollView)
-		[maskBackImageView, posterImageView, titleLabel, subtitleLabel, ratingLabel, overviewLabel, descriptionLabel].forEach { addSubview($0) }
+		[maskBackImageView, posterImageView, titleLabel, subtitleLabel, ratingLabel, overviewLabel, descriptionLabel, anotherPosterLabel, anotherPosterCollectionView].forEach { addSubview($0) }
 	}
 
 	override func configureLayout() {
@@ -70,6 +75,17 @@ class DetailView: BaseUIView {
 			$0.top.equalTo(overviewLabel.snp.bottom).offset(10)
 			$0.horizontalEdges.equalTo(self).inset(20)
 		}
+
+		anotherPosterLabel.snp.makeConstraints {
+			$0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
+			$0.horizontalEdges.equalTo(self).inset(20)
+		}
+
+		anotherPosterCollectionView.snp.makeConstraints {
+			$0.top.equalTo(anotherPosterLabel.snp.bottom).offset(10)
+			$0.horizontalEdges.equalTo(self)
+			$0.height.equalTo((UIScreen.main.bounds.width-20*4)/2)
+		}
 	}
 
 	override func configureView() {
@@ -79,12 +95,29 @@ class DetailView: BaseUIView {
 		titleLabel.font = .boldSystemFont(ofSize: 30)
 		descriptionLabel.numberOfLines = 0
 		overviewLabel.text = "줄거리"
-		[overviewLabel, descriptionLabel, subtitleLabel].forEach {
+		anotherPosterLabel.text = "이 영화의 다른 포스터"
+		[overviewLabel, descriptionLabel, subtitleLabel, anotherPosterLabel].forEach {
 			$0.font = .systemFont(ofSize: 14)
 			$0.textColor = .darkGray
 		}
 
+		posterImageView.isUserInteractionEnabled = true
 		posterImageView.clipsToBounds = true
 		posterImageView.layer.cornerRadius = 10
 	}
+
+	private static func getCollectionViewLayout() -> UICollectionViewLayout {
+		let layout = UICollectionViewFlowLayout()
+		let padding: CGFloat = 20
+		layout.itemSize = CGSize(width: (UIScreen.main.bounds.width-padding*4)/3, height: (UIScreen.main.bounds.width-padding*4)/2)
+		layout.sectionInset = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
+		layout.minimumLineSpacing = padding
+		layout.minimumInteritemSpacing = padding
+		layout.scrollDirection = .horizontal
+		return layout
+	}
+}
+
+#Preview {
+	DetailViewController()
 }

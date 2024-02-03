@@ -16,7 +16,8 @@ enum TMDBAPI {
 
 	case trending(time: Time)
 	case search(query: String, page: Int) // 열거형의 연관값
-	case photo(id: String)
+	case photo(id: Int)
+	case similar(id: Int)
 
 	private var baseURL: String {
 		return "https://api.themoviedb.org/3/"
@@ -30,6 +31,8 @@ enum TMDBAPI {
 			return URL(string: baseURL + "search/movie")!
 		case .photo(let id):
 			return URL(string: baseURL + "movie/\(id)/images")!
+		case .similar(let id):
+			return URL(string: baseURL + "movie/\(id)/recommendations")!
 		}
 	}
 
@@ -44,20 +47,22 @@ enum TMDBAPI {
 	var parameter: Parameters {
 		switch self {
 		case .trending:
-			return ["":""]
+			return [:]
 		case .search(let query, let page):
 			return ["query": query, "language": "ko-KR", "page": page]
 		case .photo:
-			return ["":""]
+			return [:]
+		case .similar:
+			return ["language": "ko-KR", "page": "1"]
 		}
 	}
 
 	var encoding: URLEncoding {
 		switch self {
 		case .trending: return .default
-
 		case .search: return .queryString
 		case .photo: return .default
+		case .similar: return .queryString
 		}
 	}
 }

@@ -42,5 +42,5 @@ class PosterCollectionViewCell: BaseCollectionViewCell {
 		posterImage.layer.cornerRadius = 10
 		posterImage.isUserInteractionEnabled = true
 		self.backgroundColor = .clear
-	}
+			}
 }
