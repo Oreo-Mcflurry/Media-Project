@@ -13,7 +13,7 @@ class DetailView: BaseUIView {
 	let maskBackImageView = MaskedImageView(frame: .zero)
 	let posterImageView = UIImageView()
 
-	let scrollView = UIScrollView()
+	let scrollView = UIScrollView(frame: .zero)
 
 	let titleLabel = UILabel()
 	let subtitleLabel = UILabel()
@@ -21,21 +21,26 @@ class DetailView: BaseUIView {
 	private let overviewLabel = UILabel()
 	let descriptionLabel = UILabel()
 	private let anotherPosterLabel = UILabel()
+	private let creditLabel = UILabel()
 
 	let anotherPosterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: getCollectionViewLayout())
+	let creditsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: getCollectionViewLayout())
 
 	override func configureHierarchy() {
 		addSubview(scrollView)
-		[maskBackImageView, posterImageView, titleLabel, subtitleLabel, ratingLabel, overviewLabel, descriptionLabel, anotherPosterLabel, anotherPosterCollectionView].forEach { addSubview($0) }
+		// 아니 이거 스크롤뷰에 안들어가 있었네요?? ㅠㅠㅠㅠ
+		[maskBackImageView, posterImageView, titleLabel, subtitleLabel, ratingLabel, overviewLabel, descriptionLabel, anotherPosterLabel, anotherPosterCollectionView, creditLabel, creditsCollectionView].forEach { scrollView.addSubview($0) }
 	}
 
 	override func configureLayout() {
 		scrollView.snp.makeConstraints {
-			$0.edges.equalTo(self)
+			$0.width.equalTo(UIScreen.main.bounds.width)
+			$0.edges.equalToSuperview()
 		}
 
 		maskBackImageView.snp.makeConstraints {
-			$0.top.horizontalEdges.equalTo(scrollView)
+			$0.top.horizontalEdges.equalToSuperview()
+			$0.width.equalToSuperview()
 			$0.height.equalTo(200)
 		}
 
@@ -48,7 +53,7 @@ class DetailView: BaseUIView {
 
 		ratingLabel.snp.makeConstraints {
 			$0.bottom.equalTo(posterImageView.snp.bottom)
-			$0.leading.equalTo(self).inset(20)
+			$0.leading.equalTo(scrollView).inset(20)
 			$0.trailing.equalTo(posterImageView.snp.leading).offset(-20)
 			$0.height.equalTo(25)
 		}
@@ -67,28 +72,42 @@ class DetailView: BaseUIView {
 
 		overviewLabel.snp.makeConstraints {
 			$0.top.equalTo(posterImageView.snp.bottom).offset(20)
-			$0.horizontalEdges.equalTo(self).inset(20)
+			$0.horizontalEdges.equalTo(scrollView).inset(20)
 			$0.height.equalTo(ratingLabel)
 		}
 		
 		descriptionLabel.snp.makeConstraints {
 			$0.top.equalTo(overviewLabel.snp.bottom).offset(10)
-			$0.horizontalEdges.equalTo(self).inset(20)
+			$0.horizontalEdges.equalTo(scrollView).inset(20)
 		}
 
 		anotherPosterLabel.snp.makeConstraints {
 			$0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
-			$0.horizontalEdges.equalTo(self).inset(20)
+			$0.horizontalEdges.equalTo(scrollView).inset(20)
 		}
 
 		anotherPosterCollectionView.snp.makeConstraints {
 			$0.top.equalTo(anotherPosterLabel.snp.bottom).offset(10)
-			$0.horizontalEdges.equalTo(self)
+			$0.horizontalEdges.equalTo(scrollView)
 			$0.height.equalTo((UIScreen.main.bounds.width-20*4)/2)
 		}
+
+		creditLabel.snp.makeConstraints {
+			$0.top.equalTo(anotherPosterCollectionView.snp.bottom).offset(20)
+			$0.horizontalEdges.equalTo(scrollView).inset(20)
+		}
+
+		creditsCollectionView.snp.makeConstraints {
+			$0.top.equalTo(creditLabel.snp.bottom).offset(10)
+			$0.horizontalEdges.equalToSuperview()
+			$0.height.equalTo((UIScreen.main.bounds.width-20*4)/2)
+			$0.bottom.equalToSuperview().inset(20)
+		}
+
 	}
 
 	override func configureView() {
+		scrollView.contentInsetAdjustmentBehavior = .never
 		[titleLabel, subtitleLabel, ratingLabel, overviewLabel, descriptionLabel].forEach {
 			$0.textAlignment = .left
 		}
@@ -96,7 +115,8 @@ class DetailView: BaseUIView {
 		descriptionLabel.numberOfLines = 0
 		overviewLabel.text = "줄거리"
 		anotherPosterLabel.text = "이 영화의 다른 포스터"
-		[overviewLabel, descriptionLabel, subtitleLabel, anotherPosterLabel].forEach {
+		creditLabel.text = "이 영화에 등장하는 인물"
+		[overviewLabel, descriptionLabel, subtitleLabel, anotherPosterLabel, creditLabel].forEach {
 			$0.font = .systemFont(ofSize: 14)
 			$0.textColor = .darkGray
 		}

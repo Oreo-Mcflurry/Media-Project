@@ -18,6 +18,7 @@ enum TMDBAPI {
 	case search(query: String, page: Int) // 열거형의 연관값
 	case photo(id: Int)
 	case similar(id: Int)
+	case credit(id: Int)
 
 	private var baseURL: String {
 		return "https://api.themoviedb.org/3/"
@@ -33,6 +34,8 @@ enum TMDBAPI {
 			return URL(string: baseURL + "movie/\(id)/images")!
 		case .similar(let id):
 			return URL(string: baseURL + "movie/\(id)/recommendations")!
+		case .credit(let id):
+			return URL(string: baseURL + "movie/\(id)/credits")!
 		}
 	}
 
@@ -54,6 +57,8 @@ enum TMDBAPI {
 			return [:]
 		case .similar:
 			return ["language": "ko-KR", "page": "1"]
+		case .credit:
+			return ["language": "ko-KR"]
 		}
 	}
 
@@ -63,6 +68,7 @@ enum TMDBAPI {
 		case .search: return .queryString
 		case .photo: return .default
 		case .similar: return .queryString
+		case .credit: return .queryString
 		}
 	}
 }

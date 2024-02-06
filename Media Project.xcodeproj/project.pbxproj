@@ -48,6 +48,7 @@
 		0BB6BFAC2B6D029400D93950 /* MaskedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BFAB2B6D029400D93950 /* MaskedImageView.swift */; };
 		0BB6BFAE2B6D035700D93950 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BFAD2B6D035700D93950 /* UIView+Extension.swift */; };
 		0BB6BFB12B6E7D4A00D93950 /* Poster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6BFB02B6E7D4A00D93950 /* Poster.swift */; };
+		0BB6C03D2B724DCB00D93950 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6C03C2B724DCB00D93950 /* Person.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,7 @@
 		0BB6BFAB2B6D029400D93950 /* MaskedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskedImageView.swift; sourceTree = "<group>"; };
 		0BB6BFAD2B6D035700D93950 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		0BB6BFB02B6E7D4A00D93950 /* Poster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poster.swift; sourceTree = "<group>"; };
+		0BB6C03C2B724DCB00D93950 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 			children = (
 				0BB6BF2F2B692AC400D93950 /* TVAPI.swift */,
 				0BB6BFB02B6E7D4A00D93950 /* Poster.swift */,
+				0BB6C03C2B724DCB00D93950 /* Person.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 				0BB6BEF12B68DC4100D93950 /* SceneDelegate.swift in Sources */,
 				0BB6BF812B6BC41700D93950 /* BaseCollectionViewCell.swift in Sources */,
 				0BB6BFA62B6CDE2F00D93950 /* DetailView.swift in Sources */,
+				0BB6C03D2B724DCB00D93950 /* Person.swift in Sources */,
 				0BB6BF2D2B6919D700D93950 /* TVCollectionViewCell.swift in Sources */,
 				0BB6BF842B6BC45000D93950 /* PosterCollectionViewCell.swift in Sources */,
 				0BB6BF482B6A2DF000D93950 /* LegacyDetailViewController.swift in Sources */,
